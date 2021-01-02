@@ -1,3 +1,5 @@
+package test;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
@@ -20,7 +22,7 @@ public abstract class BaseTest {
     @AfterTest
     public void tearDown(){
         System.out.println("After test");
-        //driver.quit();
+        driver.quit();
     }
 
 
