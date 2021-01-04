@@ -1,11 +1,12 @@
 package test;
 
 import helper.ExcelReader;
+import helper.TakeScreenShoot;
+import helper.Util;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.testng.Assert;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -15,17 +16,15 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginTest extends BaseTest {
 
-    private static String actualTitle;
-    private static String expectedTitle;
-    private static String actualAlert;
-    private static String expAlert;
+    String actualAlert;
+    String actualTitle;
 
     @Test(dataProvider = "getData")
-    public void LoginToApp(String userName, String password) {
+    public void LoginToApp(String userName, String password) throws IOException {
 
         driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
 
-        driver.get("http://www.demo.guru99.com/V4/");
+        driver.get(Util.baseUrl);
         driver.findElement(By.name("uid")).sendKeys(userName);
         driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("btnLogin")).click();
@@ -35,25 +34,26 @@ public class LoginTest extends BaseTest {
             Alert alert = driver.switchTo().alert();
             actualAlert = alert.getText();
             System.out.println(actualAlert);
-            expAlert = "User or Password is not valid";
             alert.accept();
 
-            Assert.assertEquals(expAlert, actualAlert);
+            Assert.assertEquals(Util.expAlert, actualAlert);
 
         } catch (NoAlertPresentException ex) {
             actualTitle = driver.getTitle();
-            expectedTitle = "Guru99 Bank Manager HomePage";
 
-            Assert.assertEquals(expectedTitle, actualTitle);
+            Assert.assertEquals(Util.expectedTitle, actualTitle);
 
+            //String pageText = driver.findElement(By.xpath("//tbody/tr[3]/td")).getText();
+            TakeScreenShoot.screenShoot(driver);
         }
 
     }
 
+
     @DataProvider
     public Object[][] getData() {
-        Object [][] data = null;
-        try{
+        Object[][] data = null;
+        try {
             data = ExcelReader.readExcelFile(new File("src/main/resources/files/Data.xlsx"));
 
         } catch (IOException e) {
