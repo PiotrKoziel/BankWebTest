@@ -5,12 +5,11 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
-import java.io.IOException;
 
 public class ReportTest {
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         ExtentHtmlReporter reporter = new ExtentHtmlReporter("index.html");
         ExtentReports reports = new ExtentReports();
@@ -23,13 +22,8 @@ public class ReportTest {
         test.log(Status.DEBUG, "Third step");
         test.pass("Test passed");
 
-//        test.pass("Description", MediaEntityBuilder.createScreenCaptureFromPath(".//src/main/resources/.747850000
-//        .png").build());
-
         reports.flush();
         reporter.flush();
 
-
     }
-
 }
