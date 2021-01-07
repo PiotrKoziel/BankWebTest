@@ -1,6 +1,5 @@
 package test;
 
-import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import helper.ExcelReader;
 import helper.TakeScreenShoot;
@@ -37,7 +36,6 @@ public class LoginTest extends BaseTest {
         try {
             Alert alert = driver.switchTo().alert();
             actualAlert = alert.getText();
-            System.out.println(actualAlert);
             alert.accept();
 
             Assert.assertEquals(Util.expAlert, actualAlert);
@@ -47,11 +45,17 @@ public class LoginTest extends BaseTest {
 
             Assert.assertEquals(Util.expectedTitle, actualTitle);
 
+            String userText = driver.findElement(By.xpath("//tbody/tr[3]/td")).getText();
+            String[] parts = userText.split(Util.pattern);
+            String userId = parts[1].trim();
+            Assert.assertEquals(userId.substring(0, 4), Util.firstPart);
+
+            String remainUserId = userId.substring(userId.length() - 5);
+            Assert.assertTrue(remainUserId.matches(Util.secondPart));
+
             TakeScreenShoot.screenShoot(driver);
         }
-
     }
-
 
     @DataProvider
     public Object[][] getData() {
@@ -63,7 +67,6 @@ public class LoginTest extends BaseTest {
             e.printStackTrace();
         }
         return data;
-
     }
 
 }
