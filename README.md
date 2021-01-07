@@ -8,4 +8,3 @@ information soon to be updated
 * Java
 * Selenium WebDriver
 * TestNG
-* JUnit
