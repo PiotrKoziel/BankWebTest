@@ -12,3 +12,6 @@
 * Java
 * Selenium WebDriver
 * TestNG
+
+Author: Piotr Kozieł
+
